@@ -10,60 +10,115 @@ import RequestsPage from "./pages/RequestsPage";
 import CallPage from "./pages/CallPage";
 import OnboardingPage from "./pages/OnboardingPage";
 import { Toaster } from "react-hot-toast";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { axiosInstance } from "./lib/axios";
+import useAuthUser from "./hooks/useAuthUser";
+import LoadingPage from "./components/LoadingPage";
 
 const App = () => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["todos"],
-    queryFn: async () => {
-      const response = await axiosInstance.get("auth/me");
-      return response.data;
-    },
-    retry: false, // Disable automatic retries on failure
-  });
+  const { authenticatedUser, isLoading } = useAuthUser();
+  const isAuth = !!authenticatedUser;
+  const isOnboarded = authenticatedUser?.isOnboarded ?? false;
 
-  const isAuth = data?.user;
+  if (isLoading) return <LoadingPage />;
 
   return (
     <main>
       <Routes>
+        {/* Public Routes - redirect if already logged in */}
         <Route
           path="/signup"
-          element={!isAuth ? <SignupPage /> : <Navigate to="/" />}
+          element={
+            isAuth ? (
+              <Navigate to={isOnboarded ? "/" : "/onboarding"} />
+            ) : (
+              <SignupPage />
+            )
+          }
         />
         <Route
           path="/login"
-          element={!isAuth ? <LoginPage /> : <Navigate to="/" />}
+          element={
+            isAuth ? (
+              <Navigate to={isOnboarded ? "/" : "/onboarding"} />
+            ) : (
+              <LoginPage />
+            )
+          }
         />
+        {/* Private Routes - redirect if not logged in */}
         <Route
           path="/"
-          element={isAuth ? <HomePage /> : <Navigate to="/login" />}
+          element={
+            isAuth && isOnboarded ? (
+              <HomePage />
+            ) : (
+              <Navigate to={isAuth ? "/onboarding" : "/login"} />
+            )
+          }
         />
         <Route
           path="/notifications"
-          element={isAuth ? <NotificationsPage /> : <Navigate to="/login" />}
+          element={
+            isAuth && isOnboarded ? (
+              <NotificationsPage />
+            ) : (
+              <Navigate to={isAuth ? "/onboarding" : "/login"} />
+            )
+          }
         />
         <Route
           path="/connections"
-          element={isAuth ? <ConnectionsPage /> : <Navigate to="/login" />}
+          element={
+            isAuth && isOnboarded ? (
+              <ConnectionsPage />
+            ) : (
+              <Navigate to={isAuth ? "/onboarding" : "/login"} />
+            )
+          }
         />
         <Route
           path="/chat"
-          element={isAuth ? <ChatPage /> : <Navigate to="/login" />}
+          element={
+            isAuth && isOnboarded ? (
+              <ChatPage />
+            ) : (
+              <Navigate to={isAuth ? "/onboarding" : "/login"} />
+            )
+          }
         />
         <Route
           path="/requests"
-          element={isAuth ? <RequestsPage /> : <Navigate to="/login" />}
+          element={
+            isAuth && isOnboarded ? (
+              <RequestsPage />
+            ) : (
+              <Navigate to={isAuth ? "/onboarding" : "/login"} />
+            )
+          }
         />
         <Route
           path="/call"
-          element={isAuth ? <CallPage /> : <Navigate to="/login" />}
+          element={
+            isAuth && isOnboarded ? (
+              <CallPage />
+            ) : (
+              <Navigate to={isAuth ? "/onboarding" : "/login"} />
+            )
+          }
         />
+        {/* Onboarding - only if logged in but not onboarded */}
         <Route
           path="/onboarding"
-          element={isAuth ? <OnboardingPage /> : <Navigate to="/login" />}
+          element={
+            isAuth ? (
+              isOnboarded ? (
+                <Navigate to="/" />
+              ) : (
+                <OnboardingPage />
+              )
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
       </Routes>
       <Toaster
