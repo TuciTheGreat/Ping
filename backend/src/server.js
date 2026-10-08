@@ -24,7 +24,7 @@ app.use(cookieParser()); // Cookie parser middleware to parse http cookies
 
 // Define API routes
 app.use("/api/auth", authRouter); // Use auth routes
-app.use("/api/user", userRouter); // Use user routes
+app.use("/api/users", userRouter); // Use user routes
 app.use("/api/chat", chatRouter); // Use chat routes
 
 // Start the server and listen on the defined port

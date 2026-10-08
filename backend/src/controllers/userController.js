@@ -150,7 +150,7 @@ export const getOutgoingFriendRequests = async (req, res) => {
       status: "pending",
     }).populate("recipient", "fullName image language skill");
 
-    res.status(200).json({ outgoingRequests });
+    res.status(200).json(outgoingRequests);
   } catch (error) {
     console.log(
       "Error in getOutgoingFriendRequests controller:",

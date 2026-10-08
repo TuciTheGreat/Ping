@@ -12,6 +12,7 @@ import OnboardingPage from "./pages/OnboardingPage";
 import { Toaster } from "react-hot-toast";
 import useAuthUser from "./hooks/useAuthUser";
 import LoadingPage from "./components/LoadingPage";
+import Layout from "./components/Layout";
 
 const App = () => {
   const { authenticatedUser, isLoading } = useAuthUser();
@@ -44,57 +45,58 @@ const App = () => {
             )
           }
         />
-        {/* Private Routes - redirect if not logged in */}
-        <Route
-          path="/"
-          element={
-            isAuth && isOnboarded ? (
-              <HomePage />
-            ) : (
-              <Navigate to={isAuth ? "/onboarding" : "/login"} />
-            )
-          }
-        />
-        <Route
-          path="/notifications"
-          element={
-            isAuth && isOnboarded ? (
-              <NotificationsPage />
-            ) : (
-              <Navigate to={isAuth ? "/onboarding" : "/login"} />
-            )
-          }
-        />
-        <Route
-          path="/connections"
-          element={
-            isAuth && isOnboarded ? (
-              <ConnectionsPage />
-            ) : (
-              <Navigate to={isAuth ? "/onboarding" : "/login"} />
-            )
-          }
-        />
-        <Route
-          path="/chat"
-          element={
-            isAuth && isOnboarded ? (
-              <ChatPage />
-            ) : (
-              <Navigate to={isAuth ? "/onboarding" : "/login"} />
-            )
-          }
-        />
-        <Route
-          path="/requests"
-          element={
-            isAuth && isOnboarded ? (
-              <RequestsPage />
-            ) : (
-              <Navigate to={isAuth ? "/onboarding" : "/login"} />
-            )
-          }
-        />
+        <Route path="/" element={<Layout />}>
+          <Route
+            index
+            element={
+              isAuth && isOnboarded ? (
+                <HomePage />
+              ) : (
+                <Navigate to={isAuth ? "/onboarding" : "/login"} />
+              )
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              isAuth && isOnboarded ? (
+                <NotificationsPage />
+              ) : (
+                <Navigate to={isAuth ? "/onboarding" : "/login"} />
+              )
+            }
+          />
+          <Route
+            path="/connections"
+            element={
+              isAuth && isOnboarded ? (
+                <ConnectionsPage />
+              ) : (
+                <Navigate to={isAuth ? "/onboarding" : "/login"} />
+              )
+            }
+          />
+          <Route
+            path="/chat"
+            element={
+              isAuth && isOnboarded ? (
+                <ChatPage />
+              ) : (
+                <Navigate to={isAuth ? "/onboarding" : "/login"} />
+              )
+            }
+          />
+          <Route
+            path="/requests"
+            element={
+              isAuth && isOnboarded ? (
+                <RequestsPage />
+              ) : (
+                <Navigate to={isAuth ? "/onboarding" : "/login"} />
+              )
+            }
+          />
+        </Route>
         <Route
           path="/call"
           element={
