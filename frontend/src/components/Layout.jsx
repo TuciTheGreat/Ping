@@ -2,8 +2,19 @@ import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import ThemeSelector from "./ThemeSelector";
 import Sidebar from "./Sidebar";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getFriendRequests } from "../lib/api";
 
 const Layout = () => {
+  const queryClient = useQueryClient();
+
+  const { data: friendRequests, isLoading } = useQuery({
+    queryKey: ["friendRequests"],
+    queryFn: getFriendRequests,
+  });
+
+  const incomingRequests = friendRequests?.incomingRequests || [];
+
   return (
     <div className="drawer lg:drawer-open">
       <input
@@ -40,7 +51,9 @@ const Layout = () => {
             <div className="flexEnd gap-3 ml-auto">
               <Link to={"/requests"} className="btn rounded-full">
                 Requests
-                <div className="badge badge-sm badge-info">{"00"}</div>
+                <div className="badge badge-sm badge-info">
+                  {incomingRequests ? Number(incomingRequests.length) : "00"}
+                </div>
               </Link>
               <ThemeSelector />
             </div>

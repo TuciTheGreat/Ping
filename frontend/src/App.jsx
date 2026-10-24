@@ -77,7 +77,7 @@ const App = () => {
             }
           />
           <Route
-            path="/chat"
+            path="/chat/:id"
             element={
               isAuth && isOnboarded ? (
                 <ChatPage />
@@ -98,7 +98,7 @@ const App = () => {
           />
         </Route>
         <Route
-          path="/call"
+          path="/call/:id"
           element={
             isAuth && isOnboarded ? (
               <CallPage />

@@ -4,6 +4,70 @@
   themes: all;
 }
 
+.str-chat {
+  height: 100%;
+  --str-chat__font-family: "Inter", system-ui, sans-serif;
+  --str-chat__background-core-app: var(--color-base-100);
+  --str-chat__background-core-elevation-1: var(--color-base-100);
+  --str-chat__text-primary: var(--color-base-content);
+  --str-chat__border-core-default: var(--color-base-300);
+  --str-chat__message-composer-max-width: 100%;
+  --str-chat__message-composer-padding: 0.5rem;
+}
+
+.str-chat__channel {
+  @apply items-stretch bg-transparent;
+}
+
+.str-chat__container {
+  @apply h-full w-full rounded-xl overflow-hidden;
+}
+
+.str-chat__main-panel {
+  @apply h-full! min-h-0;
+}
+
+.str-chat__channel-header {
+  @apply flex shrink-0 gap-3 bg-base-100 text-base-content pr-20;
+}
+
+.str-chat__channel-header .str-chat__channel-header__start:empty {
+  @apply hidden;
+}
+
+.str-chat__channel-header .str-chat__channel-header__end {
+  @apply -order-1 shrink-0;
+}
+
+.str-chat__channel-header .str-chat__channel-header__data {
+  @apply flex-1 items-start text-left;
+}
+
+.str-chat__message-list-main-panel {
+  @apply flex-1 min-h-0;
+}
+
+.str-chat__message-list,
+.str-chat__message-composer-compose-area {
+  @apply bg-base-100 text-base-content;
+}
+
+.str-chat .str-chat__message-composer-container {
+  @apply flex-none bg-base-100 border-base-300;
+}
+
+.str-chat__empty-channel {
+  @apply w-full justify-start gap-5 pt-16 bg-transparent;
+}
+
+.str-chat__empty-channel svg {
+  @apply size-24;
+}
+
+.str-chat__empty-channel .str-chat__empty-channel-text {
+  @apply flex-none max-w-full text-xl;
+}
+
 * {
   scroll-behavior: smooth;
   scrollbar-width: none;

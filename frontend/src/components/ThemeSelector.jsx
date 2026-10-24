@@ -12,7 +12,7 @@ const ThemeSelector = () => {
         <PaletteIcon size={19} />
       </div>
 
-      <div className="dropdown-content menu bg-base-100 rounded-box z-1 w-54 p-2 shadow-sm max-h-80 overflow-y-auto">
+      <div className="dropdown-content menu bg-base-100 rounded-box z-50 w-54 p-2 shadow-sm max-h-80 overflow-y-auto">
         <ul tabIndex="-1">
           {THEMES.map((t) => (
             <li key={t.name}>

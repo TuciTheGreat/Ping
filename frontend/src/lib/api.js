@@ -44,3 +44,25 @@ export const sendFriendRequest = async (userId) => {
   const response = await axiosInstance.post(`/users/friend-requests/${userId}`);
   return response.data;
 };
+
+export const getFriendRequests = async () => {
+  const response = await axiosInstance.get("/users/friend-requests");
+  return response.data;
+};
+
+export const acceptFriendRequest = async (requestId) => {
+  const response = await axiosInstance.put(
+    `/users/friend-requests/${requestId}/accept`,
+  );
+  return response.data;
+};
+
+export async function getStreamToken() {
+  try {
+    const res = await axiosInstance.get("/chats/token");
+    return res.data;
+  } catch (error) {
+    console.error("Failed to get Stream token:", error);
+    throw error; // <-- important: lets react-query mark query as error
+  }
+}

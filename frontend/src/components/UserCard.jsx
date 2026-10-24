@@ -46,7 +46,7 @@ const UserCard = ({
                 ) : (
                   <>
                     <UserPlusIcon className="size-4" />
-                    Connection Request
+                    Conn Request
                   </>
                 )}
               </button>
